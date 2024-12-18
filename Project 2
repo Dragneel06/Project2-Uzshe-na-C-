@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <math.h>
+
+
+double pivo(double x, int N) {
+    double t = (x - 1) / (x + 1);
+    double sum = 0.0;
+
+    for (int n = 0; n <= N; n++) {
+        double term = pow(t, 2 * n + 1) / (2 * n + 1);
+        sum += term; 
+    }
+    return sum;
+}
+
+
+double exact_function(double x) {
+    return 0.5 * log(x); 
+}
+
+int main() {
+    
+    double a = 0.2, b = 1.0; 
+    int k = 10;            
+    int N = 5;              
+    double h = (b - a) / (k - 1); 
+
+    printf("x\t\tSeries S\tExact f(x)\tError\n");
+    printf("----------------------------------------------------\n");
+
+   
+    for (int i = 0; i < k; i++) {
+        double x = a + i * h; 
+        double series_value = pivo(x, N); 
+        double exact_value = exact_function(x);       
+        double error = fabs(series_value - exact_value);
+
+        
+        printf("%.4f\t%.6f\t%.6f\t%.6f\n", x, series_value, exact_value, error);
+    }
+
+    return 0;
+}
